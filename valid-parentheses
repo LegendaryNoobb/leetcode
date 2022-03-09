@@ -1,0 +1,53 @@
+###############################
+Valid parentheses without stack
+###############################
+
+
+char opening[3] = {'(','{','['};
+char closing[3] = {')','}',']'};
+
+bool isOpening(char a){
+    for (int i = 0 ; i < 3; i++){
+        if (a == opening[i]){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool closes(char a, char b){
+    for (int i = 0 ; i < 3; i++){
+        if (a == opening[i]){
+            if (closing[i] == b){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool isValid(char * s){
+    char stack[strlen(s)];
+    int k = 0;
+    for (int i = 0; i < strlen(s); i++){
+        if (isOpening(s[i])){
+            stack[k] = s[i];
+            k++;
+        }
+        else{
+            if (k==0){
+                return false;
+            }
+            if (closes(stack[k-1],s[i])){
+                k--;
+            }
+            else{
+                return false;
+            }
+        } 
+    }
+    if (k!=0){
+        return false;
+    }
+    return true;
+}
